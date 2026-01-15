@@ -1,0 +1,7 @@
+# Trae .rules (project-level)
+# Goal: keep agents from stepping on each other's areas and enforce Capacitor workflow.
+
+- Never edit generated web assets under android/ or ios/ directly. Always run web build then cap sync.
+- UI changes live under src/. Native runtime changes live under android/ (and optionally packages/guardian-* if you create them).
+- Any change that affects Guardian Core must preserve stability when UI crashes.
+- Prefer event-driven plugin APIs (notifyListeners) over polling.

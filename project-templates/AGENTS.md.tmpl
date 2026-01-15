@@ -1,0 +1,23 @@
+# SafeHaven - Agent Guidance
+
+## Non-negotiables
+- Guardian Core reliability > UI. UI may crash; Guardian Core must keep running.
+- Capacitor workflow: web build -> cap sync -> run/open. Never hand-edit copied web assets in native projects.
+
+## Key directories (suggested)
+- src/ : SvelteKit UI
+- android/ : Android native + Guardian runtime
+- ios/ : iOS native (later)
+- .claude/skills : linked from ai-infra
+
+## Commands (update to your actual scripts)
+- pnpm dev
+- pnpm build:web
+- pnpm cap:sync
+- pnpm cap:android
+
+## Acceptance (MVP)
+- BLE disconnect triggers countdown; if not cancelled -> AlertEvent queued and sent to Tower.
+- Weak/No network: queue persists and flushes on recovery.
+- Tower stores to SQLite and sends Email successfully.
+- Diagnostics exports recent logs + config summary.
