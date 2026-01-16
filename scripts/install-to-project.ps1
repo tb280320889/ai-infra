@@ -1,5 +1,6 @@
 param(
-    [string]$ProjectRoot = (Get-Location).Path
+    [string]$ProjectRoot = (Get-Location).Path,
+    [switch]$ForceAgents
 )
 
 $ErrorActionPreference = "Stop"
@@ -52,7 +53,7 @@ if (Test-Path $InfraHandbook)
     if (Test-Path $ProjectHandbook)
     {
         try
-        { Remove-Item $ProjectHandbook -Recurse -Force 
+        { Remove-Item $ProjectHandbook -Recurse -Force
         } catch
         {
         }
@@ -61,7 +62,7 @@ if (Test-Path $InfraHandbook)
 
     Copy-Item (Join-Path $InfraHandbook "*") $ProjectHandbook -Recurse -Force
     if (!(Test-Path $ProjectHandbook))
-    { throw "handbook sync failed: $ProjectHandbook" 
+    { throw "handbook sync failed: $ProjectHandbook"
     }
 
     Write-Host "OK: Synced .ai/handbook -> $ProjectHandbook"
@@ -114,11 +115,25 @@ if (Test-Path $ServersJson)
     Write-Host "WARN: No servers.json found at $ServersJson"
 }
 
-# 4) Create AGENTS.md if missing
+# 4) Create/Update AGENTS.md (default: only create if missing)
 $AgentsTmpl = Join-Path $InfraPath "project-templates\AGENTS.md.tmpl"
 $AgentsOut = Join-Path $ProjectRoot "AGENTS.md"
-if (!(Test-Path $AgentsOut) -and (Test-Path $AgentsTmpl))
+
+if (!(Test-Path $AgentsTmpl))
 {
-    Copy-Item $AgentsTmpl $AgentsOut
-    Write-Host "OK: Created AGENTS.md"
+    Write-Host "WARN: No AGENTS template found at $AgentsTmpl"
+} else
+{
+    if (!(Test-Path $AgentsOut))
+    {
+        Copy-Item $AgentsTmpl $AgentsOut -Force
+        Write-Host "OK: Created AGENTS.md"
+    } elseif ($ForceAgents)
+    {
+        Copy-Item $AgentsTmpl $AgentsOut -Force
+        Write-Host "OK: Updated AGENTS.md (ForceAgents)"
+    } else
+    {
+        Write-Host "OK: AGENTS.md exists (not overwritten). Use -ForceAgents to refresh from template."
+    }
 }
