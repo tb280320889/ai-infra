@@ -1,12 +1,12 @@
-# 00 SOP Overview锛堢嫭绔嬪紑鍙?+ AI 鍗忓悓锛?
+﻿# 00 SOP Overview（独立开发 + AI 协同）
 
-鐩爣锛氫綘锛堟€绘寚鎸ワ級鎺屾帶闇€姹備笌楠屾敹锛汭DE 鍐?agent/妯″瀷璐熻矗灞€閮ㄥ疄鐜般€佹祴璇曘€佺敓鎴愯瘉鎹€?
+目标：你（总指挥）掌控需求与验收；IDE 内 agent/模型负责局部实现、测试、生成证据。
 
-涓夋潯纭師鍒欙細
-1) 浠讳綍鏀瑰姩蹇呴』鍙獙鏀讹細鍗＄墖閲岃鏈?DoD锛圖efinition of Done锛夊拰 Evidence锛堣瘉鎹級銆?
-2) 鐢熷懡閾捐矾浼樺厛锛氬悗鍙板瓨娲汇€佹柇鑱旀娴嬨€佸箓绛変笂鎶ャ€侀€氱煡鍙揪鎬?> UI 瀹屾暣鎬с€?
-3) 灏忔蹇窇锛氫竴寮犲崱鏈€濂?0.5鈥? 澶╁畬鎴愶紱瓒呭嚭灏辨媶鍗°€?
+三条硬原则：
+1) 任何改动必须可验收：卡片里要有 DoD（Definition of Done）和 Evidence（证据）。
+2) 生命链路优先：后台存活、断联检测、幂等上报、通知可达性 > UI 完整性。
+3) 小步快跑：一张卡最好 0.5–2 天完成；超出就拆卡。
 
-椤圭洰鍐呪€滀骇鍝佷簨瀹炩€濆簲璇ユ斁鍝噷锛?
-- PRD / user journey / failure-modes / ADR / contracts / acceptance锛氭斁椤圭洰浠撳簱 docs/ 涓嬪苟璧?git 鐗堟湰銆?
-- ai-infra 鍙矇娣€锛歋OP銆佸伐鍏锋墜鍐屻€侀€氱敤 rules/skills 妯℃澘涓庢墽琛岃鑼冦€?
+项目内“产品事实”应该放哪里：
+- PRD / user journey / failure-modes / ADR / contracts / acceptance：放项目仓库 docs/ 下并走 git 版本。
+- ai-infra 只沉淀：SOP、工具手册、通用 rules/skills 模板与执行规范。

@@ -7,7 +7,7 @@ $ErrorActionPreference = "Stop"
 function Ensure-Dir([string]$p)
 {
     if (!(Test-Path $p))
-    { New-Item -ItemType Directory -Path $p | Out-Null 
+    { New-Item -ItemType Directory -Path $p | Out-Null
     }
 }
 
@@ -15,7 +15,7 @@ function Write-Utf8NoBom([string]$path, [string]$content)
 {
     $dir = Split-Path $path -Parent
     Ensure-Dir $dir
-    [System.IO.File]::WriteAllText($path, $content, (New-Object System.Text.UTF8Encoding($false)))
+    [System.IO.File]::WriteAllText($path, $content, (New-Object System.Text.UTF8Encoding($true)))
 }
 
 $handbookRoot = Join-Path $RepoRoot "handbook"

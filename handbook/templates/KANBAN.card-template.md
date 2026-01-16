@@ -1,4 +1,4 @@
-# Kanban Card Template锛堝鍒跺埌椋炰功鍗＄墖閲岋級
+﻿# Kanban Card Template（复制到飞书卡片里）
 
 Title:
 Area / Layer / Priority:

@@ -1,30 +1,30 @@
-# 01 Workflow Loop锛堟瘡娆¤凯浠ｅ浐瀹氬惊鐜級
+﻿# 01 Workflow Loop（每次迭代固定循环）
 
-姣忔杩唬鍙帹杩涗竴寮犲崱锛圵IP=1锛屾渶澶?2锛夈€?
+每次迭代只推进一张卡（WIP=1，最多 2）。
 
-Step 0锛氶€夊崱
-- 浠庣湅鏉?Ready 閫?1 寮?P0/P1 鍗¤繘 In Progress
-- 鍐欏畬鏁达細Why锛堝搴旀梾绋?绔犺妭锛夈€乀ouches锛堟敼鍝簺鐩綍锛夈€丏oD銆丷isks
+Step 0：选卡
+- 从看板 Ready 选 1 张 P0/P1 卡进 In Progress
+- 写完整：Why（对应旅程/章节）、Touches（改哪些目录）、DoD、Risks
 
-Step 1锛氱害鏉?AI 杈撳嚭鏍煎紡锛堝己鍒讹級
-- 鍙樻洿鏂囦欢娓呭崟锛堣矾寰勶級
-- 姣忎釜鏂囦欢鏀瑰姩瑕佺偣
-- 椋庨櫓鐐?
-- 鑷祴/楠屾敹姝ラ锛堝懡浠?+ 鎵嬪姩锛?
-- 鍥炴粴鏂瑰紡锛坮evert / checkout锛?
+Step 1：约束 AI 输出格式（强制）
+- 变更文件清单（路径）
+- 每个文件改动要点
+- 风险点
+- 自测/验收步骤（命令 + 手动）
+- 回滚方式（revert / checkout）
 
-Step 2锛氬疄鐜帮紙灏忔鎻愪氦锛?
-- 閬垮厤璺ㄥ眰澶ф敼锛涜法 UI/Native/DB 灏辨媶鍗?
-- 浠讳綍娑夊強 Capacitor锛氬繀椤婚伒瀹?build -> cap sync -> run/open
+Step 2：实现（小步提交）
+- 避免跨层大改；跨 UI/Native/DB 就拆卡
+- 任何涉及 Capacitor：必须遵守 build -> cap sync -> run/open
 
-Step 3锛氶獙鏀讹紙瀵圭収 DoD锛?
-- DoD 娌¤繃涓嶈兘杩?Review
-- Evidence 蹇呭～锛氭棩蹇?鎴浘/褰曞睆/鍛戒护杈撳嚭
+Step 3：验收（对照 DoD）
+- DoD 没过不能进 Review
+- Evidence 必填：日志/截图/录屏/命令输出
 
-Step 4锛氬鐩樺啓鍥?
-- 鏂扮殑鍧戯細鍐欒繘 failure-modes 鎴?setup 鏂囨。
-- AI 鍙嶅鐘敊锛氭妸绾︽潫琛ヨ繘 rules / skill / handbook
+Step 4：复盘写回
+- 新的坑：写进 failure-modes 或 setup 文档
+- AI 反复犯错：把约束补进 rules / skill / handbook
 
-Step 5锛氭敹灏?
-- 鍗＄墖鐘舵€侊細In Progress -> Review -> Done
-- Done 涔嬪墠蹇呴』鏈?Evidence
+Step 5：收尾
+- 卡片状态：In Progress -> Review -> Done
+- Done 之前必须有 Evidence

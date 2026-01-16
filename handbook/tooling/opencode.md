@@ -1,9 +1,9 @@
-# Tooling: OpenCode
+﻿# Tooling: OpenCode
 
-- opencode.json 鐢?ai-infra 鐨?install-to-project.ps1 鐢熸垚锛堥」鐩牴锛?
-- MCP servers 閰嶇疆鏉ユ簮锛歛i-infra/mcp/servers.json
-- 鎺ㄨ崘锛氬湪椤圭洰鏍逛娇鐢ㄧ粓绔皟鐢紙鑰屼笉鏄叏灞€瀹夎锛変互淇濊瘉鐗堟湰涓€鑷?
+- opencode.json 由 ai-infra 的 install-to-project.ps1 生成（项目根）
+- MCP servers 配置来源：ai-infra/mcp/servers.json
+- 推荐：在项目根使用终端调用（而不是全局安装）以保证版本一致
 
-寤鸿瀹炶返锛?
-- 閬囧埌 UI/璺敱/缁勪欢锛氫紭鍏堜娇鐢?svelte MCP锛堝鏋滃惎鐢級
-- 閬囧埌 Native/Gradle/鏉冮檺锛氫紭鍏堣蛋 handbook + skills 鐨勭害鏉燂紝涓嶈璁?agent鑷敱鍙戞尌璺ㄧ洰褰?
+建议实践：
+- 遇到 UI/路由/组件：优先使用 svelte MCP（如果启用）
+- 遇到 Native/Gradle/权限：优先走 handbook + skills 的约束，不要让 agent自由发挥跨目录

@@ -1,8 +1,8 @@
-# AI Infra Handbook
+﻿# AI Infra Handbook
 
-杩欎唤鎵嬪唽灞炰簬 ai-infra锛堣法椤圭洰澶嶇敤锛夈€傛瘡娆℃墽琛?install-to-project.ps1锛屼細鎶婃湰鐩綍鍚屾鍒伴」鐩殑 .ai/handbook/銆?
+这份手册属于 ai-infra（跨项目复用）。每次执行 install-to-project.ps1，会把本目录同步到项目的 .ai/handbook/。
 
-寤鸿锛?
-- 涓嶈鍦ㄩ」鐩殑 .ai/handbook/ 閲屽仛闀挎湡淇敼锛堜細琚鐩栵級銆?
-- 椤圭洰鐗规湁鍐呭鏀惧湪椤圭洰浠撳簱鐨?docs/锛堜緥濡?PRD / ADR / contracts / acceptance锛夈€?
-- 鑻ヤ綘闇€瑕佷釜浜虹瑪璁帮紝鏀惧湪椤圭洰鐨?.ai/handbook.local/锛堜笉琚悓姝ヨ鐩栵級銆?
+建议：
+- 不要在项目的 .ai/handbook/ 里做长期修改（会被覆盖）。
+- 项目特有内容放在项目仓库的 docs/（例如 PRD / ADR / contracts / acceptance）。
+- 若你需要个人笔记，放在项目的 .ai/handbook.local/（不被同步覆盖）。
