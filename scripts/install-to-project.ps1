@@ -12,8 +12,8 @@ if (!(Test-Path $InfraPath))
 
 function Ensure-Dir($p)
 { if (!(Test-Path $p))
-    { New-Item -ItemType Directory -Path $p | Out-Null 
-    } 
+    { New-Item -ItemType Directory -Path $p | Out-Null
+    }
 }
 
 # 1) Link skills to .claude/skills (Claude-standard for maximum compatibility)
@@ -25,7 +25,7 @@ Ensure-Dir $ClaudeDir
 if (Test-Path $ClaudeSkills)
 {
     try
-    { Remove-Item $ClaudeSkills -Recurse -Force 
+    { Remove-Item $ClaudeSkills -Recurse -Force
     } catch
     {
     }
@@ -33,11 +33,43 @@ if (Test-Path $ClaudeSkills)
 
 cmd /c mklink /J "$ClaudeSkills" "$InfraSkills" | Out-Null
 if ($LASTEXITCODE -ne 0)
-{ throw "mklink failed with exit code $LASTEXITCODE" 
+{ throw "mklink failed with exit code $LASTEXITCODE"
 }
 if (!(Test-Path $ClaudeSkills))
-{ throw "skills link not created: $ClaudeSkills" 
+{ throw "skills link not created: $ClaudeSkills"
 }Write-Host "OK: Linked .claude/skills -> .ai/ai-infra/skills"
+
+# 1.5) Sync handbook to project .ai/handbook (copy, not link)
+$ProjectAiDir = Join-Path $ProjectRoot ".ai"
+$InfraHandbook = Join-Path $InfraPath "handbook"
+$ProjectHandbook = Join-Path $ProjectAiDir "handbook"
+
+Ensure-Dir $ProjectAiDir
+
+if (Test-Path $InfraHandbook)
+{
+    # remove old synced handbook (keep user's local notes elsewhere, e.g. .ai/handbook.local)
+    if (Test-Path $ProjectHandbook)
+    {
+        try
+        { Remove-Item $ProjectHandbook -Recurse -Force 
+        } catch
+        {
+        }
+    }
+    Ensure-Dir $ProjectHandbook
+
+    Copy-Item (Join-Path $InfraHandbook "*") $ProjectHandbook -Recurse -Force
+    if (!(Test-Path $ProjectHandbook))
+    { throw "handbook sync failed: $ProjectHandbook" 
+    }
+
+    Write-Host "OK: Synced .ai/handbook -> $ProjectHandbook"
+} else
+{
+    Write-Host "WARN: No handbook found at $InfraHandbook"
+}
+
 
 # 2) Sync Trae rules to project root .rules
 $InfraRules = Join-Path $InfraPath "rules\trae\.rules"
