@@ -5,6 +5,14 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+# install summary flags (machine-readable)
+$skills_linked = 0
+$handbook_synced = 0
+$rules_synced = 0
+$opencode_generated = 0
+$agents_written = 0
+
+
 $InfraPath = Join-Path $ProjectRoot ".ai\ai-infra"
 if (!(Test-Path $InfraPath))
 {
@@ -37,8 +45,13 @@ if ($LASTEXITCODE -ne 0)
 { throw "mklink failed with exit code $LASTEXITCODE"
 }
 if (!(Test-Path $ClaudeSkills))
-{ throw "skills link not created: $ClaudeSkills"
-}Write-Host "OK: Linked .claude/skills -> .ai/ai-infra/skills"
+{
+    throw "skills link not created: $ClaudeSkills"
+}
+
+$skills_linked = 1
+Write-Host "OK: Linked .claude/skills -> .ai/ai-infra/skills"
+$handbook_synced = 1
 
 # 1.5) Sync handbook to project .ai/handbook (copy, not link)
 $ProjectAiDir = Join-Path $ProjectRoot ".ai"
@@ -79,6 +92,7 @@ if (Test-Path $InfraRules)
 {
     Copy-Item $InfraRules $ProjectRules -Force
     Write-Host "OK: Synced .rules -> $ProjectRules"
+    $rules_synced = 1
 } else
 {
     Write-Host "WARN: No Trae rules found at $InfraRules"
@@ -110,6 +124,7 @@ if (Test-Path $ServersJson)
     $out = @{ '$schema' = "https://opencode.ai/config.json"; mcp = $mcpObj } | ConvertTo-Json -Depth 10
     [System.IO.File]::WriteAllText($OpenCodeJson, $out, (New-Object System.Text.UTF8Encoding($false)))
     Write-Host "OK: Generated opencode.json"
+    $opencode_generated = 1
 } else
 {
     Write-Host "WARN: No servers.json found at $ServersJson"
@@ -128,12 +143,17 @@ if (!(Test-Path $AgentsTmpl))
     {
         Copy-Item $AgentsTmpl $AgentsOut -Force
         Write-Host "OK: Created AGENTS.md"
+        $agents_written = 1
     } elseif ($ForceAgents)
     {
         Copy-Item $AgentsTmpl $AgentsOut -Force
         Write-Host "OK: Updated AGENTS.md (ForceAgents)"
+        $agents_written = 1
     } else
     {
         Write-Host "OK: AGENTS.md exists (not overwritten). Use -ForceAgents to refresh from template."
     }
 }
+
+Write-Host ("SUMMARY skills_linked={0} handbook_synced={1} rules_synced={2} opencode_generated={3} agents_written={4}" -f `
+        $skills_linked, $handbook_synced, $rules_synced, $opencode_generated, $agents_written)
