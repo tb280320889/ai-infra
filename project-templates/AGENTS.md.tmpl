@@ -9,6 +9,8 @@
 - Guardian Core reliability > UI. UI may crash; Guardian Core must keep running.
 - Capacitor workflow is mandatory: `web build -> cap sync -> run/open`.
 - Never hand-edit generated/copied web assets under `android/` or `ios/` (e.g. `android/app/src/main/assets/public`). Always rebuild web then sync.
+-- WIP=1: Only work on ONE task card at a time. Do not start a second task until the current one is accepted.
+- No cross-layer refactors in one change. If changes touch more than one layer (UI(Web), Plugin(Bridge), Native(Android)), split into multiple task cards and separate PRs.
 
 ## Directory boundaries
 - Web UI: `apps/mobile/src/` (SvelteKit)
