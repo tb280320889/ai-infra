@@ -1,0 +1,23 @@
+# Normalize text files as LF in repo
+* text=auto eol=lf
+
+# PowerShell / Windows scripts
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+
+# Shell scripts
+*.sh text eol=lf
+
+# Data / Docs
+*.md text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Binaries
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.jar binary
