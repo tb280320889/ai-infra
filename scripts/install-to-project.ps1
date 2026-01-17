@@ -175,4 +175,5 @@ else
     }
 }
 
-Write-Host ("SUMMARY " + ($summary.GetEnumerator() | Sort-Object Name | ForEach-Object { "$($_.Name)=$($_.Value)" } -join " "))
+$summaryPairs = $summary.GetEnumerator() | Sort-Object Name | ForEach-Object { "$($_.Name)=$($_.Value)" }
+Write-Host ("SUMMARY " + ($summaryPairs -join " "))
