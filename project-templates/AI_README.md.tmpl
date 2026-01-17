@@ -1,0 +1,69 @@
+# __PROJECT__ AI Workspace (`.ai/`)
+
+> `.ai/` 是本仓库的 **AI 协调层（control plane）**：让 Trae / OpenCode / 其他 agent 在同一套规则下工作。
+> `.ai/` 不承载业务蓝图；业务文档跟随代码版本放在 `docs/`。
+
+---
+
+## 必读入口（authoritative）
+按优先级从高到低：
+
+1) `../AGENTS.md`
+   - 项目级总规则：边界、输出格式、验收要求、WIP 规则
+
+2) `../.rules`
+   - IDE/agent 约束（Trae 等）
+   - **任何自动化/agent 都必须遵守**
+
+3) `../docs/`
+   - PRD / ADR / Architecture / Contracts / Acceptance 等一切“项目蓝图”
+
+4) `../.claude/skills/`
+   - 项目可用 skills 的权威入口（由 `.ai/ai-infra` 提供）
+   - **不要在这里写入或安装第三方 skills**
+
+5) `../opencode.json`
+   - OpenCode 的 MCP 配置（由 `.ai/ai-infra` 生成/同步）
+
+---
+
+## `.ai/` 目录结构（记住这张图）
+- `.ai/ai-infra/`
+  - **git submodule**：跨项目复用的基础设施（脚本、模板、规则、skills 源）
+  - 只在“维护 infra”时进入修改
+
+- `.ai/handbook/`
+  - **同步产物（synced output）**：由 `ai-infra` 同步到项目
+  - 不要做长期修改（会被 install 覆盖）
+
+- `.ai/handbook.local/`
+  - 项目/个人临时笔记与补充（不会被同步覆盖）
+  - 建议 gitignore
+
+- `.ai/vendor/`（可选）
+  - 第三方工具/方法论资源（BMAD/superpowers/oh-my-opencode 等）
+  - 原则：**vendor 不得写入 `.ai/ai-infra` / `.claude/skills`**
+
+- `.ai/cache/`（建议 gitignore）
+  - 生成物、临时日志、实验输出等
+
+---
+
+## 工具边界（必须遵守）
+### Trae / IDE 内置模型（规划层优先）
+- 主要读：`AGENTS.md`、`.rules`、`docs/`
+- 主要写：`docs/`
+- **禁止写入：**`.ai/ai-infra/**`、`.claude/skills/**`
+
+### OpenCode CLI（执行层）
+- 读取：`opencode.json`、`.rules`、`AGENTS.md`、`.claude/skills`
+- 插件/第三方增强只允许落地到：`../.opencode/**`
+- **禁止写入：**`.ai/ai-infra/**`、`.claude/skills/**`
+
+---
+
+## 更新与同步（infra → project）
+当你更新了 `.ai/ai-infra`（submodule 指向新 commit）后，在仓库根目录执行：
+
+- `pwsh -File .\.ai\ai-infra\scripts\install-to-project.ps1`
+- 如需刷新 `AGENTS.md`：`pwsh -File .\.ai\ai-infra\scripts\install-to-project.ps1 -ForceAgents`
